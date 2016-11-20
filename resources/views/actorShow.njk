@@ -1,0 +1,16 @@
+{% extends "layout" %}
+
+{% block content %}
+<h2>{{ actor.name }}</h2>
+<h3>IMDB link</h3>
+<pre>
+{{ actor.imdb }}
+<a href="{{ actor.imdb }}">IMDB</a>
+</pre>
+<h3>Rottentomatoes link</h3>
+<pre>
+{{ actor.rottentomatoes }}
+<a href="{{ actor.rottentomatoes }}">Rottentomatoes</a>
+</pre>
+
+{% endblock %}

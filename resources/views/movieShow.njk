@@ -1,0 +1,26 @@
+{% extends "layout" %}
+
+{% block content %}
+<h2>{{ movie.name }}</h2>
+<p>{{ movie.category.name }}</p>
+<h3>IMDB link</h3>
+<pre>
+{{ movie.imdb }}
+<a href="{{ movie.imdb }}">IMDB</a>
+</pre>
+<h3>Rottentomatoes link</h3>
+<pre>
+{{ movie.rottentomatoes }}
+<a href="{{ movie.imdb }}">Rottentomatoes</a>
+</pre>
+<h3>Trailer link</h3>
+<pre>
+{{ movie.trailer }}
+<a href="{{ movie.trailer }}">trailer</a>
+</pre>
+<h3>Rendező</h3>
+<pre>
+<a href="/director/{{ movie.director.id }}">{{ movie.director.name }}</a>
+</pre>
+
+{% endblock %}
