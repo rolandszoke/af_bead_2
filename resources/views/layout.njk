@@ -32,7 +32,7 @@
 
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-2">
           <ul class="nav navbar-nav">
-              <li><a href="/">Filmek böngészése</a></li>
+              <li><a href="/movies">Filmek böngészése</a></li>
               {% if currentUser %}
               <li><a href="/movies/create">Film beküldése</a></li>
               <li><a href="/actor/create">Szinész beküldése</a></li>
@@ -42,10 +42,6 @@
 
           <ul class="nav navbar-nav navbar-right">
           <li class="navbar-text">
-          <form action="/search" method="get">
-            <input type="text" name ="keyword">
-            <input type="submit" name ="submit">
-          </form></li>
             {% if currentUser %}
               <li class="navbar-text">Üdv, {{ currentUser.username }}!</li>
               <li><a href="/logout">Kilépés</a></li>

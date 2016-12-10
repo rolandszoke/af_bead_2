@@ -1,0 +1,96 @@
+{% extends "layout" %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/1000hz-bootstrap-validator/0.11.5/validator.min.js"></script>
+<script src="/scripts/smart_ingredients.js"></script>
+{% endblock %}
+
+{% block content %}
+<h2>Film módosítása</h2>
+
+{% if old('errors') %}
+<div class="panel panel-danger">
+  <div class="panel-heading">
+    <h3 class="panel-title">Hibák</h3>
+  </div>
+  <div class="panel-body">
+    <ul>
+      {% for error in old('errors') %}
+      <li>{{ error.message }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endif %}
+
+
+<form class="form-horizontal" method="post"
+  data-toggle="validator"
+>
+
+  {{ csrfField }}
+
+  <div class="form-group">
+    <label for="name" class="col-lg-2 control-label">Film neve</label>
+    <div class="col-lg-10">
+      <input type="text" class="form-control" id="name" name="name" placeholder="Film neve" value="{{ movie.name }}">
+    </div>
+  </div>
+  
+  <div class="form-group">
+    <label for="imdb" class="col-lg-2 control-label">Imdb link</label>
+    <div class="col-lg-10">
+      <input type="text" class="form-control" id="imdb" name="imdb" placeholder="Imdb link" value="{{movie.imdb}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="rottentomatoes" class="col-lg-2 control-label">Rottentomatoes link</label>
+    <div class="col-lg-10">
+      <input type="text" class="form-control" id="rottentomatoes" name="rottentomatoes" placeholder="Rottentomatoes link" value="{movie.rottentomatoes}}">
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="trailer" class="col-lg-2 control-label">Trailer link</label>
+    <div class="col-lg-10">
+      <input type="text" class="form-control" id="trailer" name="trailer" placeholder="Trailer link" value="{{movie.trailer}}">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="category_id" class="col-lg-2 control-label">Kategória</label>
+    <div class="col-lg-10">
+      <select class="form-control" id="category_id" name="category_id">
+        {% for category in categories %}
+        <option value="{{ category.id }}"
+          {% if category.id == movie.category_id %}
+          selected
+          {% endif %}
+        >{{ category.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="director_id" class="col-lg-2 control-label">Rendező</label>
+    <div class="col-lg-10">
+      <select class="form-control" id="director_id" name="director_id">
+        {% for director in directors %}
+        <option value="{{ director.id }}"
+          {% if director.id == movie.director_id %}
+          selected
+          {% endif %}
+        >{{ director.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-lg-10 col-lg-offset-2">
+      <button type="reset" class="btn btn-default">Mégsem</button>
+      <button type="submit" class="btn btn-primary">Küldés</button>
+    </div>
+  </div>
+</form>
+
+{% endblock %}

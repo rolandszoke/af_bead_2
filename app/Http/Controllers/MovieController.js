@@ -75,17 +75,14 @@ class MovieController {
     // response.send(movie.toJSON())
     response.redirect('/')
   }
-/*
+
   * edit (request, response) {
     const categories = yield Category.all()
+    const directors = yield Director.all()
     const id = request.param('id');
     const movie = yield Movie.find(id);
     // console.log(movie.toJSON())
 
-    if (request.currentUser.id !== movie.user_id) {
-      response.unauthorized('Access denied.')
-      return
-    }
 
 
     yield response.sendView('movieEdit', {
@@ -99,9 +96,11 @@ class MovieController {
 
     const rules = {
       name: 'required',
-      ingredients: 'required',
-      instructions: 'required',
-      category_id: 'required'
+      imdb: 'required',
+      rottentomatoes: 'required',
+      trailer: 'required',
+      category_id: 'required',
+      director_id: 'required'
     };
 
     const validation = yield Validator.validateAll(movieData, rules)
@@ -121,15 +120,17 @@ class MovieController {
     // Object.assign(movie, movieData)
     
     movie.name = movieData.name;
-    movie.ingredients = movieData.ingredients; 
-    movie.instructions = movieData.instructions;
+    movie.imdb = movieData.imdb;
+    movie.rottentomatoes = movieData.rottentomatoes;
+    movie.trailer = movieData.trailer;
+    movie.director_id = movieData.director_id;
     movie.category_id = movieData.category_id;
 
     yield movie.save()
     
     response.redirect('/')
   }
-*/
+
   * show (request, response) {
     const id = request.param('id');
     const movie = yield Movie.find(id);
@@ -141,34 +142,35 @@ class MovieController {
       movie: movie.toJSON()
     })
   }
-/*
+
   * doDelete (request, response) {
     const id = request.param('id');
     const movie = yield Movie.find(id);
 
-    if (request.currentUser.id !== movie.user_id) {
-      response.unauthorized('Access denied.')
-      return
-    }
-
     yield movie.delete()
     response.redirect('/')
-  }*/
+  }
   * search (request, response) {
-    const categories = yield Category.all()
-
-    var keyword = request.input('keyword');
-
-    for(let category of categories) {
-      const movies = yield category.movies().fetch();
-      var movies2 = movies.filter(i => i.name.indexOf(keyword) > -1)
-      category.topmovies = movies2.toJSON();
+    const page = Math.max(1, request.input('p'))
+    const filters = {
+      movieName: request.input('movieName') || '',
+      category: request.input('category') || 0
     }
 
-    yield response.sendView('main', {
-      name: '',
-      categories: categories.toJSON()
-    }) 
+    const movies = yield Movie.query()
+      .where(function () {
+        if (filters.category > 0) this.where('category_id', filters.category)
+        if (filters.movieName.length > 0) this.where('name', 'LIKE', `%${filters.movieName}%`)
+      })
+      .paginate(page, 9)
+
+    const categories = yield Category.all()
+
+    yield response.sendView('movieSearch', {
+      movies: movies.toJSON(),
+      categories: categories.toJSON(),
+      filters
+    })
   }
   
 }
