@@ -3,7 +3,7 @@
         "database": "database\\development.sqlite"
     },
     "server": {
-        "port": 3333
+        "port": 4444
     },
     "app": {
         "layouts": true,
