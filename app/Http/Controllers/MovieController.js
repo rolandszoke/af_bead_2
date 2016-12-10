@@ -86,6 +86,7 @@ class MovieController {
 
 
     yield response.sendView('movieEdit', {
+      directors: directors.toJSON(),
       categories: categories.toJSON(),
       movie: movie.toJSON()
     });
