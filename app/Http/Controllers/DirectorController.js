@@ -47,15 +47,21 @@ class DirectorController {
   }
 
   * search (request, response) {
-    var keyword = request.input('keyword');
-    const directors = yield Director.all()
-    var director = directors.filter(i => i.name.indexOf(keyword) > -1)
-    directors.topdirectors = director.toJSON();
+    const page = Math.max(1, request.input('p'))
+    const filters = {
+      directorName: request.input('directorName') || ''
+    }
 
-    yield response.sendView('main', {
-      name: '',
-      directors: directors.toJSON()
-    }) 
+    const directors = yield Director.query()
+      .where(function () {
+        if (filters.directorName.length > 0) this.where('name', 'LIKE', `%${filters.directorName}%`)
+      })
+      .paginate(page, 9)
+
+    yield response.sendView('directorSearch', {
+      directors: directors.toJSON(),
+      filters
+    })
   }
   
 }

@@ -5,15 +5,15 @@
 <p>{{ movie.category.name }}</p>
 <h3>IMDB link</h3>
 <pre>
-<a href="{{ movie.imdb }}">IMDB</a>
+<a href="{{ movie.imdb }}">{{ movie.imdb }}</a>
 </pre>
 <h3>Rottentomatoes link</h3>
 <pre>
-<a href="{{ movie.rottentomatoes }}">Rottentomatoes</a>
+<a href="{{ movie.rottentomatoes }}">{{ movie.rottentomatoes }}</a>
 </pre>
 <h3>Trailer link</h3>
 <pre>
-<a href="{{ movie.trailer }}">trailer</a>
+<a href="{{ movie.trailer }}">{{ movie.trailer }}</a>
 </pre>
 <h3>Rendező</h3>
 <pre>
@@ -25,14 +25,14 @@
 </pre>
 
 {{ csrfField | safe }}
-
+{% if currentUser %}
 <a href="/movies/{{ movie.id }}/edit" class="btn btn-default">
     Szerkeszt
 </a>
 <a id="btnDelete" href="/movies/{{ movie.id }}/delete" class="btn btn-danger">
     Töröl
 </a>
-
+{% endif %}
 <span class="help-block"></span>
 
 <div class="modal fade confirm-modal" tabindex="-1" role="dialog">

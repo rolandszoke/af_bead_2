@@ -29,9 +29,12 @@ Route.get('/movies/:id/delete', 'MovieController.doDelete').middleware('auth')
 Route.get('/actor/create', 'ActorController.create').middleware('auth')
 Route.post('/actor/create', 'ActorController.doCreate').middleware('auth')
 Route.get('/actor/:id', 'ActorController.show')
+Route.get('/actors', 'ActorController.search')
+
 Route.get('/director/create', 'DirectorController.create').middleware('auth')
 Route.post('/director/create', 'DirectorController.doCreate').middleware('auth')
 Route.get('/director/:id', 'DirectorController.show')
+Route.get('/directors', 'DirectorController.search')
 
 Route.get('/register', 'UserController.register')
 Route.get('/login', 'UserController.login')

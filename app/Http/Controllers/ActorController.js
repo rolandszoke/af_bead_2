@@ -46,16 +46,22 @@ class ActorController {
     })
   }
 
-  * search (request, response) {
-    var keyword = request.input('keyword');
-    const actors = yield Actor.all()
-    var actor = actors.filter(i => i.name.indexOf(keyword) > -1)
-    actors.topactors = actor.toJSON();
+   * search (request, response) {
+    const page = Math.max(1, request.input('p'))
+    const filters = {
+      actorName: request.input('actorName') || ''
+    }
 
-    yield response.sendView('main', {
-      name: '',
-      actors: actors.toJSON()
-    }) 
+    const actors = yield Actor.query()
+      .where(function () {
+        if (filters.actorName.length > 0) this.where('name', 'LIKE', `%${filters.actorName}%`)
+      })
+      .paginate(page, 9)
+
+    yield response.sendView('actorSearch', {
+      actors: actors.toJSON(),
+      filters
+    })
   }
   
 }

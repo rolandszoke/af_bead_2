@@ -4,13 +4,11 @@
 <h2>{{ actor.name }}</h2>
 <h3>IMDB link</h3>
 <pre>
-{{ actor.imdb }}
-<a href="{{ actor.imdb }}">IMDB</a>
+<a href="{{ actor.imdb }}">{{ actor.imdb }}</a>
 </pre>
 <h3>Rottentomatoes link</h3>
 <pre>
-{{ actor.rottentomatoes }}
-<a href="{{ actor.rottentomatoes }}">Rottentomatoes</a>
+<a href="{{ actor.rottentomatoes }}">{{ actor.rottentomatoes }}</a>
 </pre>
 
 {% endblock %}

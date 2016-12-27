@@ -1,0 +1,55 @@
+{% extends 'layout' %}
+
+{% block title %}Szinészek böngészése{% endblock %}
+{% block content %}
+  <h1>Szinészek böngészése</h1>
+  <form action="/actors" method="GET">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="inputActorName">Szinész neve</label>
+          <input type="text" class="form-control" placeholder="Szinész neve" id="inputActorName" name="actorName" value="{{ filters.actorName }}">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label>&nbsp;</label>
+          <button class="btn btn-block btn-primary" type="submit">Szűrés</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <h2>Találatok ({{ actors.total }})</h2>
+  {% for actorBatch in actors.data | batch(3) %}
+  <div class="row">
+    {% for actor in actorBatch %}
+    <div class="col-md-4">
+      <a class="result-item" href="/actor/{{ actor.id }}">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <strong>{{ actor.name }}</strong><br>
+          </div>
+        </div>
+      </a>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  Nincs a szűrésnek megfelelő film.
+  {% endfor %}
+  {% if actors.lastPage > 1 %}
+  <div class="text-center">
+    <ul class="pagination">
+      {% for page in range(1, actors.lastPage + 1) %}
+      {% if page == actors.currentPage %}
+      <li class="active">
+        <a href="/actors?p={{ page }}&amp;actorName={{ filters.actorName }}&amp;createdBy={{ filters.createdBy }}">{{ page }}</a>
+      </li>
+      {% else %}
+      <li><a href="/actors?p={{ page }}&amp;actorName={{ filters.actorName }}&amp;createdBy={{ filters.createdBy }}">{{ page }}</a></li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+{% endblock %}
