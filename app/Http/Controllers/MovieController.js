@@ -22,22 +22,7 @@ class MovieController {
       categories: categories.toJSON()
     })  
   }
-/*
-  * ownList (request, response) {
-    const categories = yield Category.all()
-    var userId = request.currentUser.id;
 
-    for(let category of categories) {
-      const movies = yield category.movies().where('user_id',userId).fetch();
-      category.topMovies = movies.toJSON();
-    }
-
-    yield response.sendView('main', {
-      name: '',
-      categories: categories.toJSON()
-    }) 
-  }
-*/
   * create (request, response) {
     const categories = yield Category.all()
     const directors = yield Director.all()
@@ -70,9 +55,7 @@ class MovieController {
       return
     }
 
-    //movieData.user_id = request.currentUser.id
     const movie = yield Movie.create(movieData)
-    // response.send(movie.toJSON())
     response.redirect('/')
   }
 
@@ -81,9 +64,6 @@ class MovieController {
     const directors = yield Director.all()
     const id = request.param('id');
     const movie = yield Movie.find(id);
-    // console.log(movie.toJSON())
-
-
 
     yield response.sendView('movieEdit', {
       directors: directors.toJSON(),
@@ -117,8 +97,6 @@ class MovieController {
 
     const id = request.param('id');
     const movie = yield Movie.find(id);
-
-    // Object.assign(movie, movieData)
     
     movie.name = movieData.name;
     movie.imdb = movieData.imdb;
@@ -137,7 +115,6 @@ class MovieController {
     const movie = yield Movie.find(id);
     yield movie.related('category').load();
     yield movie.related('director').load();
-    // response.send(movie.toJSON())
 
     yield response.sendView('movieShow', {
       movie: movie.toJSON()
@@ -172,6 +149,17 @@ class MovieController {
       categories: categories.toJSON(),
       filters
     })
+  }
+
+  *ajaxDelete(request, response) {
+    const id = request.param('id')
+    const movie = yield Movie.find(id)
+    if (!movie) {
+      response.notFound('Hiba történt a feldolgozás során!')
+      return
+    }
+    yield movie.delete()
+    response.ok({success: true});
   }
   
 }

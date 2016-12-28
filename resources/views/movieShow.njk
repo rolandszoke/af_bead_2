@@ -1,5 +1,9 @@
 {% extends "layout" %}
 
+{% block scripts %}
+<script src="/scripts/delete.js"></script>
+{% endblock %}
+
 {% block content %}
 <h2>{{ movie.name }}</h2>
 <p>{{ movie.category.name }}</p>
@@ -29,10 +33,10 @@
 <a href="/movies/{{ movie.id }}/edit" class="btn btn-default">
     Szerkeszt
 </a>
-<a id="btnDelete" href="/movies/{{ movie.id }}/delete" class="btn btn-danger">
+<a id="btnDelete" href="/movies/{{ movie.id }}/delete" class="btn btn-danger" role="button">
     Töröl
 </a>
-{% endif %}
+
 <span class="help-block"></span>
 
 <div class="modal fade confirm-modal" tabindex="-1" role="dialog">
@@ -48,5 +52,5 @@
         </div>
     </div>
 </div>
-
+{% endif %}
 {% endblock %}

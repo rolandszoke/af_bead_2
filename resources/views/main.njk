@@ -1,5 +1,7 @@
 {% extends "layout" %}
 
+
+
 {% block content %}
 
 <h1>{{ name }}</h1>
@@ -26,4 +28,14 @@
   {% endfor %}
 
 </div>
+
+{% block styles %}
+<link rel="stylesheet" href="/clock.css">
+<div class="clock"><div class="clock-face">
+  <div class="hand hour-hand"><div class="timer"></div></div>
+  <div class="hand min-hand"><div class="timer"></div></div>
+  <div class="hand second-hand"><div class="timer"></div></div>
+</div></div>
+{% endblock %}
+
 {% endblock %}

@@ -1,14 +1,14 @@
 {% extends 'layout' %}
 
-{% block title %}Szinészek böngészése{% endblock %}
+{% block title %}Rendezők böngészése{% endblock %}
 {% block content %}
-  <h1>Szinészek böngészése</h1>
+  <h1>Rendezők böngészése</h1>
   <form action="/directors" method="GET">
     <div class="row">
       <div class="col-md-3">
         <div class="form-group">
-          <label for="inputDirectorName">Szinész neve</label>
-          <input type="text" class="form-control" placeholder="Szinész neve" id="inputDirectorName" name="directorName" value="{{ filters.directorName }}">
+          <label for="inputDirectorName">Rendező neve</label>
+          <input type="text" class="form-control" placeholder="Rendező neve" id="inputDirectorName" name="directorName" value="{{ filters.directorName }}">
         </div>
       </div>
       <div class="col-md-3">
